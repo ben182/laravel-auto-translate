@@ -1,0 +1,54 @@
+{
+    "name": "ben182/laravel-auto-translate",
+    "description": "Automatically translate your language files using Google Translate",
+    "keywords": [
+        "ben182",
+        "laravel-auto-translate"
+    ],
+    "homepage": "https://github.com/ben182/laravel-auto-translate",
+    "license": "MIT License (MIT)",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Ben",
+            "email": "moin@benjaminbortels.de",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "illuminate/support": "5.7.*"
+    },
+    "require-dev": {
+        "orchestra/testbench": "3.7.*",
+        "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ben182\\LaravelAutoTranslate\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ben182\\LaravelAutoTranslate\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ben182\\LaravelAutoTranslate\\LaravelAutoTranslateServiceProvider"
+            ],
+            "aliases": {
+                "LaravelAutoTranslate": "Ben182\\LaravelAutoTranslate\\LaravelAutoTranslateFacade"
+            }
+        }
+    }
+}
