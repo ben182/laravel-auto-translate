@@ -1,13 +1,13 @@
 <?php
 
-namespace Ben182\LaravelAutoTranslate;
+namespace Ben182\AutoTranslate;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Ben182\LaravelAutoTranslate\Skeleton\SkeletonClass
+ * @see \Ben182\AutoTranslate\Skeleton\SkeletonClass
  */
-class LaravelAutoTranslateFacade extends Facade
+class AutoTranslateFacade extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -16,6 +16,6 @@ class LaravelAutoTranslateFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'laravel-auto-translate';
+        return 'auto-translate';
     }
 }

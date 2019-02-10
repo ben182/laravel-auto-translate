@@ -1,6 +1,6 @@
 <?php
 
-namespace Ben182\LaravelAutoTranslate\Tests;
+namespace Ben182\AutoTranslate\Tests;
 
 use PHPUnit\Framework\TestCase;
 

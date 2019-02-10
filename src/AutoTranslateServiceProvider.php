@@ -1,10 +1,10 @@
 <?php
 
-namespace Ben182\LaravelAutoTranslate;
+namespace Ben182\AutoTranslate;
 
 use Illuminate\Support\ServiceProvider;
 
-class LaravelAutoTranslateServiceProvider extends ServiceProvider
+class AutoTranslateServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -21,7 +21,7 @@ class LaravelAutoTranslateServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('laravel-auto-translate.php'),
+                __DIR__.'/../config/config.php' => config_path('auto-translate.php'),
             ], 'config');
 
             // Publishing the views.
@@ -50,11 +50,11 @@ class LaravelAutoTranslateServiceProvider extends ServiceProvider
     public function register()
     {
         // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'laravel-auto-translate');
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'auto-translate');
 
         // Register the main class to use with the facade
-        $this->app->singleton('laravel-auto-translate', function () {
-            return new LaravelAutoTranslate;
+        $this->app->singleton('auto-translate', function () {
+            return new AutoTranslate;
         });
     }
 }

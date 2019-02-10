@@ -6,7 +6,7 @@
         "laravel-auto-translate"
     ],
     "homepage": "https://github.com/ben182/laravel-auto-translate",
-    "license": "MIT License (MIT)",
+    "license": "MIT",
     "type": "library",
     "authors": [
         {
@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Ben182\\LaravelAutoTranslate\\": "src"
+            "Ben182\\AutoTranslate\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Ben182\\LaravelAutoTranslate\\Tests\\": "tests"
+            "Ben182\\AutoTranslate\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -44,10 +44,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Ben182\\LaravelAutoTranslate\\LaravelAutoTranslateServiceProvider"
+                "Ben182\\AutoTranslate\\AutoTranslateServiceProvider"
             ],
             "aliases": {
-                "LaravelAutoTranslate": "Ben182\\LaravelAutoTranslate\\LaravelAutoTranslateFacade"
+                "AutoTranslate": "Ben182\\AutoTranslate\\AutoTranslateFacade"
             }
         }
     }
