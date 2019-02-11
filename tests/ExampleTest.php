@@ -34,21 +34,22 @@ class ExampleTest extends TestCase
         ], app('auto-translate')->getSourceTranslations());
     }
 
-    public function test_array_undot() {
+    public function test_array_undot()
+    {
         $test = [
             'test' => [
                 'test' => [
                     'first' => 'test',
                     'second' => 'test',
-                ]
-            ]
+                ],
+            ],
         ];
 
         $dotted = Arr::dot($test);
 
         $this->assertEquals([
-            "test.test.first" => "test",
-            "test.test.second" => "test",
+            'test.test.first' => 'test',
+            'test.test.second' => 'test',
         ], $dotted);
 
         $this->assertEquals($test, app('auto-translate')->array_undot($dotted));

@@ -53,6 +53,6 @@ class MissingCommand extends Command
             AutoTranslate::fillLanguageFiles($targetLanguage, $translated);
         }
 
-        $this->info('Found ' . $missingCount . ' missing language keys.');
+        $this->info('Found '.$missingCount.' missing language keys.');
     }
 }
