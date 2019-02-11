@@ -2,12 +2,10 @@
 
 namespace Ben182\AutoTranslate;
 
+use Themsaid\Langman\Manager;
 use Illuminate\Support\ServiceProvider;
 use Ben182\AutoTranslate\Commands\AllCommand;
 use Ben182\AutoTranslate\Commands\MissingCommand;
-use Themsaid\Langman\Manager;
-use Stichoza\GoogleTranslate\GoogleTranslate;
-use Ben182\AutoTranslate\Translators\SimpleGoogleTranslator;
 
 class AutoTranslateServiceProvider extends ServiceProvider
 {
@@ -63,6 +61,7 @@ class AutoTranslateServiceProvider extends ServiceProvider
         // Register the main class to use with the facade
         $this->app->singleton('auto-translate', function () {
             $translator = config('auto-translate.translator');
+
             return new AutoTranslate(app(Manager::class), new $translator);
         });
     }

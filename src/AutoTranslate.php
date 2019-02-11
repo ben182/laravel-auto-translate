@@ -4,7 +4,6 @@ namespace Ben182\AutoTranslate;
 
 use Illuminate\Support\Arr;
 use Themsaid\Langman\Manager as Langman;
-use Illuminate\Support\Facades\Cache;
 use Ben182\AutoTranslate\Translators\TranslatorInterface;
 
 class AutoTranslate
@@ -23,16 +22,17 @@ class AutoTranslate
         $this->languageFiles = $this->manager->files();
     }
 
-    public function getSourceTranslations() {
+    public function getSourceTranslations()
+    {
         return $this->getTranslations(config('auto-translate.source_language'));
     }
 
-    public function getTranslations($lang) {
+    public function getTranslations($lang)
+    {
         $aReturn = [];
 
         foreach ($this->languageFiles as $fileKeyName => $languagesFile) {
-
-            if (!isset($languagesFile[$lang])) {
+            if (! isset($languagesFile[$lang])) {
                 continue;
             }
 
@@ -44,8 +44,8 @@ class AutoTranslate
         return $aReturn;
     }
 
-    public function getMissingTranslations($lang) {
-
+    public function getMissingTranslations($lang)
+    {
         $source = $this->getSourceTranslations();
         $lang = $this->getTranslations($lang);
 
@@ -57,8 +57,8 @@ class AutoTranslate
         return collect($dottedSource)->only($diff);
     }
 
-    public function translate($targetLanguage, $data) {
-
+    public function translate($targetLanguage, $data)
+    {
         $this->translator->setTarget($targetLanguage);
 
         $dottedSource = Arr::dot($data);
@@ -70,17 +70,14 @@ class AutoTranslate
         return $this->array_undot($dottedSource);
     }
 
-    public function fillLanguageFiles($language, $data) {
+    public function fillLanguageFiles($language, $data)
+    {
         foreach ($data as $languageFileKey => $translations) {
-
-
-            $translations = array_map(function($item) use($language) {
+            $translations = array_map(function ($item) use ($language) {
                 return [
                     $language => $item,
                 ];
             }, $translations);
-
-
 
             $this->manager->fillKeys($languageFileKey, $translations);
         }
@@ -91,6 +88,7 @@ class AutoTranslate
         foreach ($dottedArray as $key => $value) {
             array_set($initialArray, $key, $value);
         }
+
         return $initialArray;
     }
 }
