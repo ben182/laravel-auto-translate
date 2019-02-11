@@ -3,6 +3,10 @@
 namespace Ben182\AutoTranslate;
 
 use Illuminate\Support\ServiceProvider;
+use Ben182\AutoTranslate\Commands\AllCommand;
+use Ben182\AutoTranslate\Commands\MissingCommand;
+use Themsaid\Langman\Manager;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class AutoTranslateServiceProvider extends ServiceProvider
 {
@@ -40,7 +44,10 @@ class AutoTranslateServiceProvider extends ServiceProvider
             ], 'lang');*/
 
             // Registering package commands.
-            // $this->commands([]);
+            $this->commands([
+                AllCommand::class,
+                MissingCommand::class,
+            ]);
         }
     }
 
@@ -54,7 +61,7 @@ class AutoTranslateServiceProvider extends ServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton('auto-translate', function () {
-            return new AutoTranslate;
+            return new AutoTranslate(app(Manager::class), new GoogleTranslate);
         });
     }
 }
