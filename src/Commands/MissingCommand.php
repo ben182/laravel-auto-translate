@@ -2,9 +2,9 @@
 
 namespace Ben182\AutoTranslate\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Arr;
 use AutoTranslate;
+use Illuminate\Support\Arr;
+use Illuminate\Console\Command;
 
 class MissingCommand extends Command
 {

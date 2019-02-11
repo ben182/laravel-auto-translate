@@ -2,10 +2,9 @@
 
 namespace Ben182\AutoTranslate\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Arr;
-use Themsaid\Langman\Manager;
 use AutoTranslate;
+use Illuminate\Support\Arr;
+use Illuminate\Console\Command;
 
 class AllCommand extends Command
 {
