@@ -2,11 +2,8 @@
 
 namespace Ben182\AutoTranslate\Tests;
 
-use Ben182\AbTesting\AbTestingFacade;
-use Illuminate\Support\Facades\Event;
-use Ben182\AbTesting\AbTestingServiceProvider;
-use Ben182\AutoTranslate\AutoTranslateServiceProvider;
 use Themsaid\Langman\LangmanServiceProvider;
+use Ben182\AutoTranslate\AutoTranslateServiceProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -42,8 +39,9 @@ class TestCase extends \Orchestra\Testbench\TestCase
         }
     }
 
-    public function getContentOfLanguageFile($file) {
-        return (array) include $this->app['config']['auto-translate.path'] . '\\' . $file;
+    public function getContentOfLanguageFile($file)
+    {
+        return (array) include $this->app['config']['auto-translate.path'].'\\'.$file;
     }
 
     protected function getEnvironmentSetUp($app)
