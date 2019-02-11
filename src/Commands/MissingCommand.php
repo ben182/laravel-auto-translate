@@ -3,6 +3,8 @@
 namespace Ben182\AutoTranslate\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
+use AutoTranslate;
 
 class MissingCommand extends Command
 {
@@ -37,6 +39,13 @@ class MissingCommand extends Command
      */
     public function handle()
     {
+        $targetLanguages = Arr::wrap(config('auto-translate.target_language'));
 
+        foreach ($targetLanguages as $targetLanguage) {
+            // dump(AutoTranslate::getMissingTranslations($targetLanguage));
+            $translated = AutoTranslate::translate($targetLanguage, AutoTranslate::getMissingTranslations($targetLanguage));
+
+            AutoTranslate::fillLanguageFiles($targetLanguage, $translated);
+        }
     }
 }

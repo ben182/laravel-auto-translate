@@ -5,5 +5,6 @@
  */
 return [
     'source_language' => 'en',
-    'target_language' => ['de', 'fr'],
+    'target_language' => ['de'],
+    'translator' => \Ben182\AutoTranslate\Translators\SimpleGoogleTranslator::class,
 ];

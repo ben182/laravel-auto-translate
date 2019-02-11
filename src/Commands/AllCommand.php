@@ -3,8 +3,9 @@
 namespace Ben182\AutoTranslate\Commands;
 
 use Illuminate\Console\Command;
-use Ben182\AutoTranslate\AutoTranslate;
 use Illuminate\Support\Arr;
+use Themsaid\Langman\Manager;
+use AutoTranslate;
 
 class AllCommand extends Command
 {
@@ -42,9 +43,9 @@ class AllCommand extends Command
         $targetLanguages = Arr::wrap(config('auto-translate.target_language'));
 
         foreach ($targetLanguages as $targetLanguage) {
-            $translated = app('auto-translate')->translateSourceTranslations($targetLanguage);
+            $translated = AutoTranslate::translate($targetLanguage, AutoTranslate::getSourceTranslations());
 
-            app('auto-translate')->fillLanguageFiles($targetLanguage, $translated);
+            AutoTranslate::fillLanguageFiles($targetLanguage, $translated);
         }
     }
 }

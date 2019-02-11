@@ -5,6 +5,7 @@ namespace Ben182\AutoTranslate;
 use Illuminate\Support\Arr;
 use Themsaid\Langman\Manager as Langman;
 use Illuminate\Support\Facades\Cache;
+use Ben182\AutoTranslate\Translators\TranslatorInterface;
 
 class AutoTranslate
 {
@@ -13,7 +14,7 @@ class AutoTranslate
 
     protected $languageFiles;
 
-    public function __construct(Langman $manager, $translator)
+    public function __construct(Langman $manager, TranslatorInterface $translator)
     {
         $this->manager = $manager;
         $this->translator = $translator;
@@ -22,16 +23,20 @@ class AutoTranslate
         $this->languageFiles = $this->manager->files();
     }
 
-    // protected function getLanguageFile($language, $key) {
-    //     return $this->languageFiles[$key][$language];
-    // }
-
     public function getSourceTranslations() {
+        return $this->getTranslations(config('auto-translate.source_language'));
+    }
+
+    public function getTranslations($lang) {
         $aReturn = [];
 
         foreach ($this->languageFiles as $fileKeyName => $languagesFile) {
 
-            $allTranslations = $this->manager->getFileContent($languagesFile[config('auto-translate.source_language')]);
+            if (!isset($languagesFile[$lang])) {
+                continue;
+            }
+
+            $allTranslations = $this->manager->getFileContent($languagesFile[$lang]);
 
             $aReturn[$fileKeyName] = $allTranslations;
         }
@@ -39,43 +44,31 @@ class AutoTranslate
         return $aReturn;
     }
 
-    public function translateSourceTranslations($targetLanguage) {
+    public function getMissingTranslations($lang) {
 
-        return Cache::remember('translateSourceTranslations' . $targetLanguage, 1440, function() use ($targetLanguage) {
+        $source = $this->getSourceTranslations();
+        $lang = $this->getTranslations($lang);
 
-            $this->translator->setTarget($targetLanguage);
+        $dottedSource = Arr::dot($source);
+        $dottedlang = Arr::dot($lang);
 
-            $source = $this->getSourceTranslations();
+        $diff = array_diff(array_keys($dottedSource), array_keys($dottedlang));
 
-            $dottedSource = Arr::dot($source);
-
-            foreach ($dottedSource as $key => $value) {
-                $dottedSource[$key] = is_string($value) ? $this->translator->translate($value) : $value;
-            }
-
-            return $this->array_undot($dottedSource);
-        });
+        return collect($dottedSource)->only($diff);
     }
 
-    // public function getAllLanguage($lang) {
+    public function translate($targetLanguage, $data) {
 
-    //     $langParams = Arr::wrap($lang);
+        $this->translator->setTarget($targetLanguage);
 
-    //     dump($this->languageFiles);
+        $dottedSource = Arr::dot($data);
 
-    //     $aReturn = [];
+        foreach ($dottedSource as $key => $value) {
+            $dottedSource[$key] = is_string($value) ? $this->translator->translate($value) : $value;
+        }
 
-    //     foreach ($langParams as $lang) {
-    //         foreach ($this->languageFiles as $fileKeyName => $languagesFile) {
-
-    //             $allTranslations = $this->manager->getFileContent($languagesFile[$lang]);
-
-    //             $aReturn[$fileKeyName][$lang] = $allTranslations;
-    //         }
-    //     }
-
-    //     return $aReturn;
-    // }
+        return $this->array_undot($dottedSource);
+    }
 
     public function fillLanguageFiles($language, $data) {
         foreach ($data as $languageFileKey => $translations) {
