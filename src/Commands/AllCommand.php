@@ -42,9 +42,14 @@ class AllCommand extends Command
         $targetLanguages = Arr::wrap(config('auto-translate.target_language'));
 
         foreach ($targetLanguages as $targetLanguage) {
-            $translated = AutoTranslate::translate($targetLanguage, AutoTranslate::getSourceTranslations());
+
+            $sourceTranslations = AutoTranslate::getSourceTranslations();
+
+            $translated = AutoTranslate::translate($targetLanguage, $sourceTranslations);
 
             AutoTranslate::fillLanguageFiles($targetLanguage, $translated);
         }
+
+        $this->info('Translated ' . count(Arr::dot($sourceTranslations)) . ' translations.');
     }
 }

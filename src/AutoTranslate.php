@@ -83,7 +83,7 @@ class AutoTranslate
         }
     }
 
-    protected function array_undot($dottedArray, $initialArray = [])
+    public function array_undot($dottedArray, $initialArray = [])
     {
         foreach ($dottedArray as $key => $value) {
             array_set($initialArray, $key, $value);

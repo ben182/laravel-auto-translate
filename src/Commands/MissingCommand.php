@@ -41,11 +41,18 @@ class MissingCommand extends Command
     {
         $targetLanguages = Arr::wrap(config('auto-translate.target_language'));
 
+        $missingCount = 0;
+
         foreach ($targetLanguages as $targetLanguage) {
-            // dump(AutoTranslate::getMissingTranslations($targetLanguage));
-            $translated = AutoTranslate::translate($targetLanguage, AutoTranslate::getMissingTranslations($targetLanguage));
+            $missing = AutoTranslate::getMissingTranslations($targetLanguage);
+
+            $missingCount += $missing->count();
+
+            $translated = AutoTranslate::translate($targetLanguage, $missing);
 
             AutoTranslate::fillLanguageFiles($targetLanguage, $translated);
         }
+
+        $this->info('Found ' . $missingCount . ' missing language keys.');
     }
 }
