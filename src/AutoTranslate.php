@@ -11,15 +11,11 @@ class AutoTranslate
     protected $manager;
     protected $translator;
 
-    protected $languageFiles;
-
     public function __construct(Langman $manager, TranslatorInterface $translator)
     {
         $this->manager = $manager;
         $this->translator = $translator;
         $this->translator->setSource(config('auto-translate.source_language'));
-
-        $this->languageFiles = $this->manager->files();
     }
 
     public function getSourceTranslations()
@@ -27,11 +23,13 @@ class AutoTranslate
         return $this->getTranslations(config('auto-translate.source_language'));
     }
 
-    public function getTranslations($lang)
+    public function getTranslations(string $lang)
     {
         $aReturn = [];
 
-        foreach ($this->languageFiles as $fileKeyName => $languagesFile) {
+        $files = $this->manager->files();
+
+        foreach ($files as $fileKeyName => $languagesFile) {
             if (! isset($languagesFile[$lang])) {
                 continue;
             }
@@ -44,7 +42,7 @@ class AutoTranslate
         return $aReturn;
     }
 
-    public function getMissingTranslations($lang)
+    public function getMissingTranslations(string $lang)
     {
         $source = $this->getSourceTranslations();
         $lang = $this->getTranslations($lang);
@@ -57,7 +55,7 @@ class AutoTranslate
         return collect($dottedSource)->only($diff);
     }
 
-    public function translate($targetLanguage, $data)
+    public function translate(string $targetLanguage, $data)
     {
         $this->translator->setTarget($targetLanguage);
 
@@ -70,7 +68,7 @@ class AutoTranslate
         return $this->array_undot($dottedSource);
     }
 
-    public function fillLanguageFiles($language, $data)
+    public function fillLanguageFiles(string $language, array $data)
     {
         foreach ($data as $languageFileKey => $translations) {
             $translations = array_map(function ($item) use ($language) {
@@ -83,7 +81,7 @@ class AutoTranslate
         }
     }
 
-    public function array_undot($dottedArray, $initialArray = [])
+    public function array_undot(array $dottedArray, array $initialArray = []) : array
     {
         foreach ($dottedArray as $key => $value) {
             array_set($initialArray, $key, $value);
