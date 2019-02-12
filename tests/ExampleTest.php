@@ -2,9 +2,8 @@
 
 namespace Ben182\AutoTranslate\Tests;
 
-use Illuminate\Support\Arr;
 use Mockery;
-use Ben182\AutoTranslate\Translators\SimpleGoogleTranslator;
+use Illuminate\Support\Arr;
 use Ben182\AutoTranslate\Translators\TranslatorInterface;
 
 class ExampleTest extends TestCase
@@ -58,8 +57,8 @@ class ExampleTest extends TestCase
         $this->assertEquals($test, app('auto-translate')->array_undot($dotted));
     }
 
-    public function test_getMissingTranslations() {
-
+    public function test_getMissingTranslations()
+    {
         $this->createTempFiles([
             'en' => [
                 'user' => "<?php\n return ['name' => 'Name', 'age' => 'Age'];",
@@ -77,8 +76,8 @@ class ExampleTest extends TestCase
         ], $missing->toArray());
     }
 
-    public function test_getMissingTranslations2() {
-
+    public function test_getMissingTranslations2()
+    {
         $this->createTempFiles([
             'en' => [
                 'user' => "<?php\n return ['name' => 'Name', 'age' => 'Age'];",
@@ -95,8 +94,8 @@ class ExampleTest extends TestCase
         ], $missing->toArray());
     }
 
-    public function test_getMissingTranslations3() {
-
+    public function test_getMissingTranslations3()
+    {
         $this->createTempFiles([
             'en' => [
                 'user' => "<?php\n return ['name' => 'Name'];",
@@ -111,7 +110,8 @@ class ExampleTest extends TestCase
         $this->assertEquals([], $missing->toArray());
     }
 
-    public function test_fillLanguageFiles() {
+    public function test_fillLanguageFiles()
+    {
         $test = [
             'user' => [
                 'age' => 'Age',
@@ -125,7 +125,8 @@ class ExampleTest extends TestCase
         $this->assertEquals($test, $translations);
     }
 
-    public function test_translate() {
+    public function test_translate()
+    {
         $mock = Mockery::mock(TranslatorInterface::class);
         $mock
         ->shouldReceive('setSource')
@@ -140,7 +141,7 @@ class ExampleTest extends TestCase
         $translations = app('auto-translate')->translate('de', [
             'user' => [
                 'age' => 'Age',
-            ]
+            ],
         ]);
 
         $this->assertEquals([
