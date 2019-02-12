@@ -70,7 +70,6 @@ class AutoTranslateServiceProvider extends ServiceProvider
                 'langman.path' => config('auto-translate.path'),
             ]);
 
-
             // dump(app(TranslatorInterface::class));
 
             return new AutoTranslate(app(Manager::class), app(TranslatorInterface::class));
