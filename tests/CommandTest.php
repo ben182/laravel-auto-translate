@@ -5,11 +5,10 @@ namespace Ben182\AutoTranslate\Tests;
 use Ben182\AutoTranslate\Commands\AllCommand;
 use Ben182\AutoTranslate\Commands\MissingCommand;
 
-
 class CommandTest extends TestCase
 {
-    public function test_AllCommand() {
-
+    public function test_AllCommand()
+    {
         $this->createTempFiles([
             'en' => [
                 'user' => "<?php\n return ['name' => 'Name', 'age' => 'Age'];",
@@ -18,9 +17,10 @@ class CommandTest extends TestCase
 
         try {
             (new AllCommand(app('auto-translate')))->handle();
-        } catch (\Throwable $th) {}
+        } catch (\Throwable $th) {
+        }
 
-        $translations =app('auto-translate')->getTranslations('de');
+        $translations = app('auto-translate')->getTranslations('de');
 
         $this->assertEquals([
             'user' => [
@@ -30,8 +30,8 @@ class CommandTest extends TestCase
         ], $translations);
     }
 
-    public function test_MissingCommand() {
-
+    public function test_MissingCommand()
+    {
         $this->createTempFiles([
             'en' => [
                 'user' => "<?php\n return ['name' => 'Name', 'age' => 'Age'];",
@@ -43,7 +43,8 @@ class CommandTest extends TestCase
 
         try {
             (new MissingCommand(app('auto-translate')))->handle();
-        } catch (\Throwable $th) {}
+        } catch (\Throwable $th) {
+        }
 
         $translations = app('auto-translate')->getTranslations('de');
 
