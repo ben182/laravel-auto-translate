@@ -20,7 +20,7 @@ class AllCommand extends Command
      *
      * @var string
      */
-    protected $description = '';
+    protected $description = 'Translates all source translations to target translations';
 
     protected $autoTranslator;
 

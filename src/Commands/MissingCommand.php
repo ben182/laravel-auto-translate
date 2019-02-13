@@ -20,7 +20,7 @@ class MissingCommand extends Command
      *
      * @var string
      */
-    protected $description = '';
+    protected $description = 'Translates all source translations that are not set in your target translations';
 
     protected $autoTranslator;
 
