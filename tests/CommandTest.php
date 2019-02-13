@@ -2,9 +2,9 @@
 
 namespace Ben182\AutoTranslate\Tests;
 
+use Ben182\AutoTranslate\AutoTranslateFacade;
 use Ben182\AutoTranslate\Commands\AllCommand;
 use Ben182\AutoTranslate\Commands\MissingCommand;
-use Ben182\AutoTranslate\AutoTranslateFacade;
 
 class CommandTest extends TestCase
 {
