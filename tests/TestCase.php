@@ -41,7 +41,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     public function getContentOfLanguageFile($file)
     {
-        return (array) include realpath($this->app['config']['auto-translate.path'].'\\'.$file);
+        return (array) include $this->app['config']['auto-translate.path'].'/'.$file;
     }
 
     protected function getEnvironmentSetUp($app)
