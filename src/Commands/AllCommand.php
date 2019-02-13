@@ -2,9 +2,9 @@
 
 namespace Ben182\AutoTranslate\Commands;
 
-use AutoTranslate;
 use Illuminate\Support\Arr;
 use Illuminate\Console\Command;
+use Ben182\AutoTranslate\AutoTranslate;
 
 class AllCommand extends Command
 {
@@ -22,14 +22,17 @@ class AllCommand extends Command
      */
     protected $description = '';
 
+    protected $autoTranslator;
+
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(AutoTranslate $autoTranslator)
     {
         parent::__construct();
+        $this->autoTranslator = $autoTranslator;
     }
 
     /**
@@ -42,11 +45,11 @@ class AllCommand extends Command
         $targetLanguages = Arr::wrap(config('auto-translate.target_language'));
 
         foreach ($targetLanguages as $targetLanguage) {
-            $sourceTranslations = AutoTranslate::getSourceTranslations();
+            $sourceTranslations = $this->autoTranslator->getSourceTranslations();
 
-            $translated = AutoTranslate::translate($targetLanguage, $sourceTranslations);
+            $translated = $this->autoTranslator->translate($targetLanguage, $sourceTranslations);
 
-            AutoTranslate::fillLanguageFiles($targetLanguage, $translated);
+            $this->autoTranslator->fillLanguageFiles($targetLanguage, $translated);
         }
 
         $this->info('Translated '.count(Arr::dot($sourceTranslations)).' translations.');

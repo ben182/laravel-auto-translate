@@ -6,7 +6,7 @@ use Mockery;
 use Illuminate\Support\Arr;
 use Ben182\AutoTranslate\Translators\TranslatorInterface;
 
-class ExampleTest extends TestCase
+class AutoTranslateTest extends TestCase
 {
     public function test_getTranslations()
     {
@@ -136,6 +136,7 @@ class ExampleTest extends TestCase
             ->with('Age')
             ->andReturn('test')
             ->mock();
+
         $this->app->instance(TranslatorInterface::class, $mock);
 
         $translations = app('auto-translate')->translate('de', [
