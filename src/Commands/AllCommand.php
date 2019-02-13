@@ -52,6 +52,6 @@ class AllCommand extends Command
             $this->autoTranslator->fillLanguageFiles($targetLanguage, $translated);
         }
 
-        $this->info('Translated '.count(Arr::dot($sourceTranslations)).' translations.');
+        $this->info('Translated '.count(Arr::dot($sourceTranslations)).' language keys.');
     }
 }

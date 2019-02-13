@@ -48,7 +48,6 @@ class MissingCommand extends Command
 
         foreach ($targetLanguages as $targetLanguage) {
             $missing = $this->autoTranslator->getMissingTranslations($targetLanguage);
-
             $missingCount += $missing->count();
 
             $translated = $this->autoTranslator->translate($targetLanguage, $missing);
@@ -56,6 +55,6 @@ class MissingCommand extends Command
             $this->autoTranslator->fillLanguageFiles($targetLanguage, $translated);
         }
 
-        $this->info('Found '.$missingCount.' missing language keys.');
+        $this->info('Translated '.$missingCount.' missing language keys.');
     }
 }
