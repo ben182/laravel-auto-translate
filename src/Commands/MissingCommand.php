@@ -2,9 +2,9 @@
 
 namespace Ben182\AutoTranslate\Commands;
 
-use AutoTranslate;
 use Illuminate\Support\Arr;
 use Illuminate\Console\Command;
+use Ben182\AutoTranslate\AutoTranslate;
 
 class MissingCommand extends Command
 {
@@ -22,14 +22,17 @@ class MissingCommand extends Command
      */
     protected $description = '';
 
+    protected $autoTranslator;
+
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(AutoTranslate $autoTranslator)
     {
         parent::__construct();
+        $this->autoTranslator = $autoTranslator;
     }
 
     /**
@@ -44,13 +47,13 @@ class MissingCommand extends Command
         $missingCount = 0;
 
         foreach ($targetLanguages as $targetLanguage) {
-            $missing = AutoTranslate::getMissingTranslations($targetLanguage);
+            $missing = $this->autoTranslator->getMissingTranslations($targetLanguage);
 
             $missingCount += $missing->count();
 
-            $translated = AutoTranslate::translate($targetLanguage, $missing);
+            $translated = $this->autoTranslator->translate($targetLanguage, $missing);
 
-            AutoTranslate::fillLanguageFiles($targetLanguage, $translated);
+            $this->autoTranslator->fillLanguageFiles($targetLanguage, $translated);
         }
 
         $this->info('Found '.$missingCount.' missing language keys.');
