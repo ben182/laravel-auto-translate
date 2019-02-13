@@ -65,13 +65,10 @@ class AutoTranslateServiceProvider extends ServiceProvider
 
         // Register the main class to use with the facade
         $this->app->singleton('auto-translate', function () {
-            // dump('resolve');
+
             config([
                 'langman.path' => config('auto-translate.path'),
             ]);
-
-
-            // dump(app(TranslatorInterface::class));
 
             return new AutoTranslate(app(Manager::class), app(TranslatorInterface::class));
         });
