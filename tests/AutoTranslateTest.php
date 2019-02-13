@@ -5,6 +5,7 @@ namespace Ben182\AutoTranslate\Tests;
 use Mockery;
 use Illuminate\Support\Arr;
 use Ben182\AutoTranslate\Translators\TranslatorInterface;
+use Ben182\AutoTranslate\AutoTranslateFacade;
 
 class AutoTranslateTest extends TestCase
 {
@@ -26,14 +27,14 @@ class AutoTranslateTest extends TestCase
                 'name' => 'Name',
                 'age' => 'Age',
             ],
-        ], app('auto-translate')->getTranslations('en'));
+        ], AutoTranslateFacade::getTranslations('en'));
 
         $this->assertEquals([
             'user' => [
                 'name' => 'Name',
                 'age' => 'Age',
             ],
-        ], app('auto-translate')->getSourceTranslations());
+        ], AutoTranslateFacade::getSourceTranslations());
     }
 
     public function test_array_undot()
@@ -54,7 +55,7 @@ class AutoTranslateTest extends TestCase
             'test.test.second' => 'test',
         ], $dotted);
 
-        $this->assertEquals($test, app('auto-translate')->array_undot($dotted));
+        $this->assertEquals($test, AutoTranslateFacade::array_undot($dotted));
     }
 
     public function test_getMissingTranslations()
@@ -69,7 +70,7 @@ class AutoTranslateTest extends TestCase
             ],
         ]);
 
-        $missing = app('auto-translate')->getMissingTranslations('de');
+        $missing = AutoTranslateFacade::getMissingTranslations('de');
 
         $this->assertEquals([
             'dd.name' => 'Name',
@@ -87,7 +88,7 @@ class AutoTranslateTest extends TestCase
             ],
         ]);
 
-        $missing = app('auto-translate')->getMissingTranslations('de');
+        $missing = AutoTranslateFacade::getMissingTranslations('de');
 
         $this->assertEquals([
             'user.age' => 'Age',
@@ -105,7 +106,7 @@ class AutoTranslateTest extends TestCase
             ],
         ]);
 
-        $missing = app('auto-translate')->getMissingTranslations('de');
+        $missing = AutoTranslateFacade::getMissingTranslations('de');
 
         $this->assertEquals([], $missing->toArray());
     }
@@ -118,9 +119,9 @@ class AutoTranslateTest extends TestCase
             ],
         ];
 
-        app('auto-translate')->fillLanguageFiles('en', $test);
+        AutoTranslateFacade::fillLanguageFiles('en', $test);
 
-        $translations = app('auto-translate')->getTranslations('en');
+        $translations = AutoTranslateFacade::getTranslations('en');
 
         $this->assertEquals($test, $translations);
     }
@@ -139,7 +140,7 @@ class AutoTranslateTest extends TestCase
 
         $this->app->instance(TranslatorInterface::class, $mock);
 
-        $translations = app('auto-translate')->translate('de', [
+        $translations = AutoTranslateFacade::translate('de', [
             'user' => [
                 'age' => 'Age',
             ],

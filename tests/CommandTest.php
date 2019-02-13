@@ -4,6 +4,7 @@ namespace Ben182\AutoTranslate\Tests;
 
 use Ben182\AutoTranslate\Commands\AllCommand;
 use Ben182\AutoTranslate\Commands\MissingCommand;
+use Ben182\AutoTranslate\AutoTranslateFacade;
 
 class CommandTest extends TestCase
 {
@@ -20,7 +21,7 @@ class CommandTest extends TestCase
         } catch (\Throwable $th) {
         }
 
-        $translations = app('auto-translate')->getTranslations('de');
+        $translations = AutoTranslateFacade::getTranslations('de');
 
         $this->assertEquals([
             'user' => [
@@ -46,7 +47,7 @@ class CommandTest extends TestCase
         } catch (\Throwable $th) {
         }
 
-        $translations = app('auto-translate')->getTranslations('de');
+        $translations = AutoTranslateFacade::getTranslations('de');
 
         $this->assertEquals([
             'user' => [
