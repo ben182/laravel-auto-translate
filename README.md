@@ -33,7 +33,7 @@ You can specify your source language, the target language(s), the translator and
 
 ### Missing translations
 
-Simply call the artisan missing command for translating all the translations that are set in your source language, but not in your target language.
+Simply call the artisan missing command for translating all the translations that are set in your source language, but not in your target language:
 
 ```bash
 php artisan autotrans:missing
@@ -64,7 +64,7 @@ The artisan missing command will then translate the missing `auth.throttle` key.
 
 ### All translations
 
-To overwrite all your existing target language keys with the translation of the source language simply call
+To overwrite all your existing target language keys with the translation of the source language simply call:
 
 ```bash
 php artisan autotrans:all
