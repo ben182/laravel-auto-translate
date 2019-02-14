@@ -7,7 +7,7 @@
 
 With this package you can translate your language files using a translator service. Currently the package ships only with Google Translate.
 
-Specify a source language and a target language and it will automatically translate your files. This is useful if you want to prototype something quickly or just a first idea of the translation for later editing. The package ships with 2 artisan commands. One for translating all the missing translations that are set in the source language but not in the target language. The other one for translating all source language files and overwriting everything in the target language.
+Specify a source language and a target language and it will automatically translate your files. This is useful if you want to prototype something quickly or just a first idea of the translation for later editing. The package ships with two artisan commands. One for translating all the missing translations that are set in the source language but not in the target language. The other one for translating all source language files and overwriting everything in the target language.
 
 ## Installation
 
@@ -33,7 +33,7 @@ You can specify your source language, the target language(s), the translation ma
 
 ### Missing translations
 
-Simply call the missing artisan command for translating all the translations that are set in your source language but not in your target language.
+Simply call the artisan missing command for translating all the translations that are set in your source language, but not in your target language.
 
 ```bash
 php artisan autotrans:missing
@@ -45,21 +45,8 @@ E.g. You have English set as your source language. The source language has a tra
 <?php
 
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
-
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-
 ];
 ```
 
@@ -69,23 +56,11 @@ Your target language is German. The auth.php file has the following translations
 <?php
 
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used during authentication for various
-    | messages that we need to display to the user. You are free to modify
-    | these language lines according to your application's requirements.
-    |
-    */
-
     'failed' => 'Diese Kombination aus Zugangsdaten wurde nicht in unserer Datenbank gefunden.',
 ];
 ```
 
-The missing artisan command will then translate the missing `auth.throttle` key.
+The artisan missing command will then translate the missing `auth.throttle` key.
 
 ### All translations
 
@@ -97,8 +72,7 @@ php artisan autotrans:all
 
 This will overwrite every single key with a translation of the equivalent source language key.
 
-
-### Extending
+## Extending
 
 You can create your own translator by creating a class that implements `\Ben182\AutoTranslate\Translators\TranslatorInterface`. Simply reference it in your config file.
 
