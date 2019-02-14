@@ -1,13 +1,17 @@
-# Very short description of the package
+# Laravel Auto Translate
 
 [![Latest Version](https://img.shields.io/github/release/ben182/laravel-auto-translate.svg?style=flat-square)](https://github.com/ben182/laravel-auto-translate/releases)
 [![Build Status](https://img.shields.io/travis/ben182/laravel-auto-translate/master.svg?style=flat-square)](https://travis-ci.org/ben182/laravel-auto-translate)
 [![Quality Score](https://img.shields.io/scrutinizer/g/ben182/laravel-auto-translate.svg?style=flat-square)](https://scrutinizer-ci.com/g/ben182/laravel-auto-translate)
 [![Code Coverage](https://scrutinizer-ci.com/g/ben182/laravel-auto-translate/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/ben182/laravel-auto-translate/?branch=master)
 
-With this package you can translate your language files using Google Translate. Specify a source language and a target language and it will automatically translate your files. This is useful if you want to prototype something or just want a first idea of the translation and edit it later. The package ships with 2 new artisan commands. One for translating all the missing translations that are set in the source language but not in the target language. The other one for translating all source language files and overwriting everything in the target language.
+With this package you can translate your language files using a translator service. Currently the package ships only with Google Translate.
+
+Specify a source language and a target language and it will automatically translate your files. This is useful if you want to prototype something quickly or just a first idea of the translation for later editing. The package ships with 2 artisan commands. One for translating all the missing translations that are set in the source language but not in the target language. The other one for translating all source language files and overwriting everything in the target language.
 
 ## Installation
+
+This package can be used in Laravel 5.6 or higher.
 
 You can install the package via composer:
 
@@ -81,7 +85,7 @@ return [
 ];
 ```
 
-The missing artisan command will then translate the missing auth.throttle key.
+The missing artisan command will then translate the missing `auth.throttle` key.
 
 ### All translations
 
@@ -96,7 +100,7 @@ This will overwrite every single key with a translation of the equivalent source
 
 ### Extending
 
-You can create your own translation manager by creating a class that implements `\Ben182\AutoTranslate\Translators\TranslatorInterface`. Simply reference it in your config file.
+You can create your own translator by creating a class that implements `\Ben182\AutoTranslate\Translators\TranslatorInterface`. Simply reference it in your config file.
 
 ### Testing
 
