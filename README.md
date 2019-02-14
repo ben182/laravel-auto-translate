@@ -27,7 +27,7 @@ After installation publish the config file:
 php artisan vendor:publish --provider="Ben182\AutoTranslate\AutoTranslateServiceProvider"
 ```
 
-You can specify your source language, the target language(s), the translation manager and the path to your language files in there.
+You can specify your source language, the target language(s), the translator and the path to your language files in there.
 
 ## Usage
 
@@ -39,7 +39,7 @@ Simply call the artisan missing command for translating all the translations tha
 php artisan autotrans:missing
 ```
 
-E.g. You have English set as your source language. The source language has a translation in auth.php
+E.g. you have English set as your source language. The source language has translations in auth.php:
 
 ```php
 <?php
