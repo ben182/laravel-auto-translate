@@ -96,7 +96,7 @@ If you discover any security related issues, please email moin@benjaminbortels.d
 
 ## Credits
 
-- [Ben](https://github.com/ben182)
+- [Benjamin Bortels](https://github.com/ben182)
 - [All Contributors](../../contributors)
 
 ## License
