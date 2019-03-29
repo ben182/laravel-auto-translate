@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "^7.1",
-        "illuminate/support": "5.6.* || 5.7.*",
+        "illuminate/support": "^5.6",
         "stichoza/google-translate-php": "^4.0",
         "themsaid/laravel-langman": "^1.3"
     },
