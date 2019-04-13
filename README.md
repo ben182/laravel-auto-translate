@@ -1,5 +1,5 @@
 <h6 align="center">
-    <img src="https://i.ibb.co/r2X47fd/Laravel-Auto-Translate.jpg" width="150"/>
+    <img src="https://i.ibb.co/YpcGBSP/defile-de-mode.png" width="300"/>
 </h6>
 
 [![Latest Version](https://img.shields.io/github/release/ben182/laravel-auto-translate.svg?style=flat-square)](https://github.com/ben182/laravel-auto-translate/releases)
