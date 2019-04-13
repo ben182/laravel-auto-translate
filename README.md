@@ -1,5 +1,5 @@
 <h6 align="center">
-    <img src="https://i.ibb.co/YpcGBSP/defile-de-mode.png" width="300"/>
+    <img src="https://i.ibb.co/5hhcPSH/defile-de-mode-1.png" width="300"/>
 </h6>
 
 <p align="center"><a href="https://github.com/ben182/laravel-auto-translate/releases"><img src="https://camo.githubusercontent.com/7aeaaffdab372bb7f1a7bc771400d9e18295916b/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f72656c656173652f62656e3138322f6c61726176656c2d6175746f2d7472616e736c6174652e7376673f7374796c653d666c61742d737175617265" alt="Latest Version" data-canonical-src="https://img.shields.io/github/release/ben182/laravel-auto-translate.svg?style=flat-square" style="max-width:100%;"></a>
