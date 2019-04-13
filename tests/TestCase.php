@@ -13,7 +13,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
         exec('rm -rf '.__DIR__.'/temp/*');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         exec('rm -rf '.__DIR__.'/temp/*');
