@@ -44,6 +44,12 @@ class MissingCommand extends Command
     {
         $targetLanguages = Arr::wrap(config('auto-translate.target_language'));
 
+        $this->line('Found ' . count($targetLanguages) . ' languages to translate');
+
+
+        $bar = $this->output->createProgressBar(count($targetLanguages));
+        $bar->start();
+
         $missingCount = 0;
 
         foreach ($targetLanguages as $targetLanguage) {
@@ -53,7 +59,11 @@ class MissingCommand extends Command
             $translated = $this->autoTranslator->translate($targetLanguage, $missing);
 
             $this->autoTranslator->fillLanguageFiles($targetLanguage, $translated);
+
+            $bar->advance();
         }
+
+        $bar->finish();
 
         $this->info('Translated '.$missingCount.' missing language keys.');
     }
