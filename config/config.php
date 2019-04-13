@@ -20,4 +20,13 @@ return [
      * This is the translator used to translate the source language files. You can also specify your own here if you wish. It has to implement \Ben182\AutoTranslate\Translators\TranslatorInterface.
      */
     'translator' => \Ben182\AutoTranslate\Translators\SimpleGoogleTranslator::class,
+
+    'simple_google_translator' => [
+
+        // The translator will wait between these numbers between each request.
+        'sleep_between_requests' => [1, 3],
+
+        // If you want to proxy the requests, you can specify a proxy server here.
+        'proxy' => '',
+    ],
 ];

@@ -1,9 +1,11 @@
-# Laravel Auto Translate
+<h6 align="center">
+    <img src="https://i.ibb.co/5hhcPSH/defile-de-mode-1.png" width="300"/>
+</h6>
 
-[![Latest Version](https://img.shields.io/github/release/ben182/laravel-auto-translate.svg?style=flat-square)](https://github.com/ben182/laravel-auto-translate/releases)
-[![Build Status](https://img.shields.io/travis/ben182/laravel-auto-translate/master.svg?style=flat-square)](https://travis-ci.org/ben182/laravel-auto-translate)
-[![Quality Score](https://img.shields.io/scrutinizer/g/ben182/laravel-auto-translate.svg?style=flat-square)](https://scrutinizer-ci.com/g/ben182/laravel-auto-translate)
-[![Code Coverage](https://scrutinizer-ci.com/g/ben182/laravel-auto-translate/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/ben182/laravel-auto-translate/?branch=master)
+<p align="center"><a href="https://github.com/ben182/laravel-auto-translate/releases"><img src="https://camo.githubusercontent.com/7aeaaffdab372bb7f1a7bc771400d9e18295916b/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f72656c656173652f62656e3138322f6c61726176656c2d6175746f2d7472616e736c6174652e7376673f7374796c653d666c61742d737175617265" alt="Latest Version" data-canonical-src="https://img.shields.io/github/release/ben182/laravel-auto-translate.svg?style=flat-square" style="max-width:100%;"></a>
+<a href="https://travis-ci.org/ben182/laravel-auto-translate" rel="nofollow"><img src="https://camo.githubusercontent.com/8c01aa130a16fabf6a8e313719f4f274c7c401b4/68747470733a2f2f696d672e736869656c64732e696f2f7472617669732f62656e3138322f6c61726176656c2d6175746f2d7472616e736c6174652f6d61737465722e7376673f7374796c653d666c61742d737175617265" alt="Build Status" data-canonical-src="https://img.shields.io/travis/ben182/laravel-auto-translate/master.svg?style=flat-square" style="max-width:100%;"></a>
+<a href="https://scrutinizer-ci.com/g/ben182/laravel-auto-translate" rel="nofollow"><img src="https://camo.githubusercontent.com/a2132ab348aaaeae4e0cfee432965a86b8d6b7af/68747470733a2f2f696d672e736869656c64732e696f2f7363727574696e697a65722f672f62656e3138322f6c61726176656c2d6175746f2d7472616e736c6174652e7376673f7374796c653d666c61742d737175617265" alt="Quality Score" data-canonical-src="https://img.shields.io/scrutinizer/g/ben182/laravel-auto-translate.svg?style=flat-square" style="max-width:100%;"></a>
+<a href="https://scrutinizer-ci.com/g/ben182/laravel-auto-translate/?branch=master" rel="nofollow"><img src="https://camo.githubusercontent.com/24eb67f423309ba600507b578cc04a925e6d4698/68747470733a2f2f7363727574696e697a65722d63692e636f6d2f672f62656e3138322f6c61726176656c2d6175746f2d7472616e736c6174652f6261646765732f636f7665726167652e706e673f623d6d6173746572" alt="Code Coverage" data-canonical-src="https://scrutinizer-ci.com/g/ben182/laravel-auto-translate/badges/coverage.png?b=master" style="max-width:100%;"></a></p>
 
 With this package you can translate your language files using a translator service. Currently the package ships only with Google Translate.
 
