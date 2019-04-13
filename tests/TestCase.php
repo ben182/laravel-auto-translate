@@ -7,13 +7,13 @@ use Ben182\AutoTranslate\AutoTranslateServiceProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         exec('rm -rf '.__DIR__.'/temp/*');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         exec('rm -rf '.__DIR__.'/temp/*');
