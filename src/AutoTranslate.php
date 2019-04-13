@@ -84,7 +84,7 @@ class AutoTranslate
     public function array_undot(array $dottedArray, array $initialArray = []) : array
     {
         foreach ($dottedArray as $key => $value) {
-            array_set($initialArray, $key, $value);
+            Arr::set($initialArray, $key, $value);
         }
 
         return $initialArray;
