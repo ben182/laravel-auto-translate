@@ -44,8 +44,7 @@ class MissingCommand extends Command
     {
         $targetLanguages = Arr::wrap(config('auto-translate.target_language'));
 
-        $this->line('Found ' . count($targetLanguages) . ' languages to translate');
-
+        $this->line('Found '.count($targetLanguages).' languages to translate');
 
         $bar = $this->output->createProgressBar(count($targetLanguages));
         $bar->start();
