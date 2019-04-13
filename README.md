@@ -2,10 +2,12 @@
     <img src="https://i.ibb.co/YpcGBSP/defile-de-mode.png" width="300"/>
 </h6>
 
+<p align="center">
 [![Latest Version](https://img.shields.io/github/release/ben182/laravel-auto-translate.svg?style=flat-square)](https://github.com/ben182/laravel-auto-translate/releases)
 [![Build Status](https://img.shields.io/travis/ben182/laravel-auto-translate/master.svg?style=flat-square)](https://travis-ci.org/ben182/laravel-auto-translate)
 [![Quality Score](https://img.shields.io/scrutinizer/g/ben182/laravel-auto-translate.svg?style=flat-square)](https://scrutinizer-ci.com/g/ben182/laravel-auto-translate)
 [![Code Coverage](https://scrutinizer-ci.com/g/ben182/laravel-auto-translate/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/ben182/laravel-auto-translate/?branch=master)
+</p>
 
 With this package you can translate your language files using a translator service. Currently the package ships only with Google Translate.
 
