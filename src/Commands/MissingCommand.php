@@ -46,7 +46,6 @@ class MissingCommand extends Command
 
         $this->line('Found ' . count($targetLanguages) . ' languages to translate');
 
-
         $bar = $this->output->createProgressBar(count($targetLanguages));
         $bar->start();
 
