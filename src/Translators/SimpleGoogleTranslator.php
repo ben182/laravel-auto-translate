@@ -38,6 +38,7 @@ class SimpleGoogleTranslator implements TranslatorInterface
     {
         try {
             sleep(random_int(1, 3));
+
             return $this->translator->translate($string);
         } catch (\Throwable $th) {
             if ($th->getMessage() === 'Return value of Stichoza\GoogleTranslate\GoogleTranslate::translate() must be of the type string, null returned') {
