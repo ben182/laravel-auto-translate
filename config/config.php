@@ -28,5 +28,5 @@ return [
 
         // If you want to proxy the requests, you can specify a proxy server here.
         'proxy' => '',
-    ]
+    ],
 ];
