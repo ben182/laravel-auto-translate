@@ -46,24 +46,27 @@ class MissingCommand extends Command
 
         $this->line('Found '.count($targetLanguages).' languages to translate');
 
-        $bar = $this->output->createProgressBar(count($targetLanguages));
-        $bar->start();
-
         $missingCount = 0;
-
         foreach ($targetLanguages as $targetLanguage) {
             $missing = $this->autoTranslator->getMissingTranslations($targetLanguage);
             $missingCount += $missing->count();
+        }
 
-            $translated = $this->autoTranslator->translate($targetLanguage, $missing);
+        $bar = $this->output->createProgressBar($missingCount);
+        $bar->start();
+
+        foreach ($targetLanguages as $targetLanguage) {
+            $missing = $this->autoTranslator->getMissingTranslations($targetLanguage);
+
+            $translated = $this->autoTranslator->translate($targetLanguage, $missing, function() use($bar) {
+                $bar->advance();
+            });
 
             $this->autoTranslator->fillLanguageFiles($targetLanguage, $translated);
-
-            $bar->advance();
         }
 
         $bar->finish();
 
-        $this->info('Translated '.$missingCount.' missing language keys.');
+        $this->info("\nTranslated ".$missingCount.' missing language keys.');
     }
 }

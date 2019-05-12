@@ -55,7 +55,7 @@ class AutoTranslate
         return collect($dottedSource)->only($diff);
     }
 
-    public function translate(string $targetLanguage, $data)
+    public function translate(string $targetLanguage, $data, $callbackAfterEachTranslation = null)
     {
         $this->translator->setTarget($targetLanguage);
 
@@ -63,6 +63,10 @@ class AutoTranslate
 
         foreach ($dottedSource as $key => $value) {
             $dottedSource[$key] = is_string($value) ? $this->translator->translate($value) : $value;
+
+            if ($callbackAfterEachTranslation) {
+                $callbackAfterEachTranslation();
+            }
         }
 
         return $this->array_undot($dottedSource);
