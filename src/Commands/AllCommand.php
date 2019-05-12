@@ -48,7 +48,7 @@ class AllCommand extends Command
 
         $availableTranslations = 0;
         $sourceTranslations = $this->autoTranslator->getSourceTranslations();
-        $availableTranslations += count(Arr::dot($sourceTranslations));
+        $availableTranslations = count(Arr::dot($sourceTranslations)) * count($targetLanguages);
 
         $bar = $this->output->createProgressBar($availableTranslations);
         $bar->start();
@@ -65,6 +65,6 @@ class AllCommand extends Command
 
         $bar->finish();
 
-        $this->info("\nTranslated ".count(Arr::dot($sourceTranslations)).' language keys.');
+        $this->info("\nTranslated ".$availableTranslations.' language keys.');
     }
 }
