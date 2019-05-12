@@ -9,7 +9,7 @@ use Scn\DeeplApiConnector\Model\TranslationConfig;
 use Scn\DeeplApiConnector\DeeplClient;
 use Scn\DeeplApiConnector\Exception\RequestException;
 
-class DeeplyTranslator implements TranslatorInterface
+class DeeplTranslator implements TranslatorInterface
 {
     protected $translator;
     protected $source;
@@ -39,7 +39,7 @@ class DeeplyTranslator implements TranslatorInterface
         $translation = new TranslationConfig(
             $string,
             $this->target,
-            $this->source,
+            $this->source
         );
 
         try {
