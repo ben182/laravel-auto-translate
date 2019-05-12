@@ -2,12 +2,10 @@
 
 namespace Ben182\AutoTranslate\Translators;
 
-use Stichoza\GoogleTranslate\GoogleTranslate;
-use Ben182\AutoTranslate\Exceptions\LanguageCodeNotExist;
-use ChrisKonnertz\DeepLy\DeepLy;
-use Scn\DeeplApiConnector\Model\TranslationConfig;
 use Scn\DeeplApiConnector\DeeplClient;
+use Scn\DeeplApiConnector\Model\TranslationConfig;
 use Scn\DeeplApiConnector\Exception\RequestException;
+use Ben182\AutoTranslate\Exceptions\LanguageCodeNotExist;
 
 class DeeplTranslator implements TranslatorInterface
 {
