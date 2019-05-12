@@ -58,7 +58,7 @@ class MissingCommand extends Command
         foreach ($targetLanguages as $targetLanguage) {
             $missing = $this->autoTranslator->getMissingTranslations($targetLanguage);
 
-            $translated = $this->autoTranslator->translate($targetLanguage, $missing, function() use($bar) {
+            $translated = $this->autoTranslator->translate($targetLanguage, $missing, function () use ($bar) {
                 $bar->advance();
             });
 
