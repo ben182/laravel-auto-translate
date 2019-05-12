@@ -56,7 +56,7 @@ class AllCommand extends Command
         foreach ($targetLanguages as $targetLanguage) {
             $dottedSource = Arr::dot($sourceTranslations);
 
-            $translated = $this->autoTranslator->translate($targetLanguage, $dottedSource, function() use($bar) {
+            $translated = $this->autoTranslator->translate($targetLanguage, $dottedSource, function () use ($bar) {
                 $bar->advance();
             });
 
