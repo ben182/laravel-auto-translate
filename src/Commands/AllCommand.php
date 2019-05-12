@@ -51,7 +51,6 @@ class AllCommand extends Command
 
         $availableTranslations += count(Arr::dot($sourceTranslations));
 
-
         $bar = $this->output->createProgressBar($availableTranslations);
         $bar->start();
 
@@ -59,7 +58,6 @@ class AllCommand extends Command
             $dottedSource = Arr::dot($sourceTranslations);
 
             $this->autoTranslator->translator->setTarget($targetLanguage);
-
 
             foreach ($dottedSource as $key => $value) {
                 $dottedSource[$key] = is_string($value) ? $this->autoTranslator->translator->translate($value) : $value;
