@@ -62,23 +62,18 @@ class AutoTranslate
         $dottedSource = Arr::dot($data);
 
         foreach ($dottedSource as $key => $value) {
-
-
             if (is_string($value)) {
                 preg_match_all('/:\S+/', $value, $m);
             }
-
 
             $dottedSource[$key] = is_string($value) ? $this->translator->translate($value) : $value;
 
             if (isset($m[0])) {
                 $replacements = $m[0];
-                $dottedSource[$key] = preg_replace_callback('/:\S+/', function($matches) use (&$replacements) {
+                $dottedSource[$key] = preg_replace_callback('/:\S+/', function ($matches) use (&$replacements) {
                     return array_shift($replacements);
                 }, $dottedSource[$key]);
             }
-
-
 
             if ($callbackAfterEachTranslation) {
                 $callbackAfterEachTranslation();
