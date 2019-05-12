@@ -46,21 +46,33 @@ class AllCommand extends Command
 
         $this->line('Found '.count($targetLanguages).' languages to translate');
 
-        $bar = $this->output->createProgressBar(count($targetLanguages));
+        $availableTranslations = 0;
+        $sourceTranslations = $this->autoTranslator->getSourceTranslations();
+
+        $availableTranslations += count(Arr::dot($sourceTranslations));
+
+
+        $bar = $this->output->createProgressBar($availableTranslations);
         $bar->start();
 
         foreach ($targetLanguages as $targetLanguage) {
-            $sourceTranslations = $this->autoTranslator->getSourceTranslations();
+            $dottedSource = Arr::dot($sourceTranslations);
 
-            $translated = $this->autoTranslator->translate($targetLanguage, $sourceTranslations);
+            $this->autoTranslator->translator->setTarget($targetLanguage);
+
+
+            foreach ($dottedSource as $key => $value) {
+                $dottedSource[$key] = is_string($value) ? $this->autoTranslator->translator->translate($value) : $value;
+                $bar->advance();
+            }
+
+            $translated = $this->autoTranslator->array_undot($dottedSource);
 
             $this->autoTranslator->fillLanguageFiles($targetLanguage, $translated);
-
-            $bar->advance();
         }
 
         $bar->finish();
 
-        $this->info('Translated '.count(Arr::dot($sourceTranslations)).' language keys.');
+        $this->info("\nTranslated ".count(Arr::dot($sourceTranslations)).' language keys.');
     }
 }

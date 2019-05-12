@@ -9,7 +9,7 @@ use Ben182\AutoTranslate\Translators\TranslatorInterface;
 class AutoTranslate
 {
     protected $manager;
-    protected $translator;
+    public $translator;
 
     public function __construct(Langman $manager, TranslatorInterface $translator)
     {
