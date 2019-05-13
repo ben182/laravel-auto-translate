@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - 7.1
   - 7.2
   - 7.3
 
@@ -18,9 +17,6 @@ env:
 
 matrix:
     fast_finish: true
-    exclude:
-        - php: 7.1
-          env: ILLUMINATE_VERSION=5.8.* PHPUNIT_VERSION=~8.0 COVERAGE=true
 
 before_install:
     - travis_retry composer self-update

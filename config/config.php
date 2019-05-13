@@ -29,4 +29,10 @@ return [
         // If you want to proxy the requests, you can specify a proxy server here.
         'proxy' => '',
     ],
+
+    'deepl' => [
+
+        // Your DeepL API Key. See https://www.deepl.com/pro.html#developer
+        'api_key' => '',
+    ],
 ];

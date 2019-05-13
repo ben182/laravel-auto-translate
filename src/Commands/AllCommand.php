@@ -3,6 +3,7 @@
 namespace Ben182\AutoTranslate\Commands;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Ben182\AutoTranslate\AutoTranslate;
 
@@ -44,23 +45,28 @@ class AllCommand extends Command
     {
         $targetLanguages = Arr::wrap(config('auto-translate.target_language'));
 
-        $this->line('Found '.count($targetLanguages).' languages to translate');
+        $foundLanguages = count($targetLanguages);
+        $this->line('Found '.$foundLanguages.' '.Str::plural('language', $foundLanguages).' to translate');
 
-        $bar = $this->output->createProgressBar(count($targetLanguages));
+        $availableTranslations = 0;
+        $sourceTranslations = $this->autoTranslator->getSourceTranslations();
+        $availableTranslations = count(Arr::dot($sourceTranslations)) * count($targetLanguages);
+
+        $bar = $this->output->createProgressBar($availableTranslations);
         $bar->start();
 
         foreach ($targetLanguages as $targetLanguage) {
-            $sourceTranslations = $this->autoTranslator->getSourceTranslations();
+            $dottedSource = Arr::dot($sourceTranslations);
 
-            $translated = $this->autoTranslator->translate($targetLanguage, $sourceTranslations);
+            $translated = $this->autoTranslator->translate($targetLanguage, $dottedSource, function () use ($bar) {
+                $bar->advance();
+            });
 
             $this->autoTranslator->fillLanguageFiles($targetLanguage, $translated);
-
-            $bar->advance();
         }
 
         $bar->finish();
 
-        $this->info('Translated '.count(Arr::dot($sourceTranslations)).' language keys.');
+        $this->info("\nTranslated ".$availableTranslations.' language keys.');
     }
 }

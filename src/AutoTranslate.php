@@ -9,7 +9,7 @@ use Ben182\AutoTranslate\Translators\TranslatorInterface;
 class AutoTranslate
 {
     protected $manager;
-    protected $translator;
+    public $translator;
 
     public function __construct(Langman $manager, TranslatorInterface $translator)
     {
@@ -55,17 +55,47 @@ class AutoTranslate
         return collect($dottedSource)->only($diff);
     }
 
-    public function translate(string $targetLanguage, $data)
+    public function translate(string $targetLanguage, $data, $callbackAfterEachTranslation = null)
     {
         $this->translator->setTarget($targetLanguage);
 
         $dottedSource = Arr::dot($data);
 
         foreach ($dottedSource as $key => $value) {
+            $variables = $this->findVariables($value);
+
             $dottedSource[$key] = is_string($value) ? $this->translator->translate($value) : $value;
+
+            $dottedSource[$key] = $this->replaceTranslatedVariablesWithOld($variables, $dottedSource[$key]);
+
+            if ($callbackAfterEachTranslation) {
+                $callbackAfterEachTranslation();
+            }
         }
 
         return $this->array_undot($dottedSource);
+    }
+
+    public function findVariables($string)
+    {
+        $m = null;
+
+        if (is_string($string)) {
+            preg_match_all('/:\S+/', $string, $m);
+        }
+
+        return $m;
+    }
+
+    public function replaceTranslatedVariablesWithOld($variables, $string)
+    {
+        if (isset($variables[0])) {
+            $replacements = $variables[0];
+
+            return preg_replace_callback('/:\S+/', function ($matches) use (&$replacements) {
+                return array_shift($replacements);
+            }, $string);
+        }
     }
 
     public function fillLanguageFiles(string $language, array $data)

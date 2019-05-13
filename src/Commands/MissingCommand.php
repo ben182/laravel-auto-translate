@@ -3,6 +3,7 @@
 namespace Ben182\AutoTranslate\Commands;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Ben182\AutoTranslate\AutoTranslate;
 
@@ -44,26 +45,31 @@ class MissingCommand extends Command
     {
         $targetLanguages = Arr::wrap(config('auto-translate.target_language'));
 
-        $this->line('Found '.count($targetLanguages).' languages to translate');
-
-        $bar = $this->output->createProgressBar(count($targetLanguages));
-        $bar->start();
+        $foundLanguages = count($targetLanguages);
+        $this->line('Found '.$foundLanguages.' '.Str::plural('language', $foundLanguages).' to translate');
 
         $missingCount = 0;
-
         foreach ($targetLanguages as $targetLanguage) {
             $missing = $this->autoTranslator->getMissingTranslations($targetLanguage);
             $missingCount += $missing->count();
+            $this->line('Found '.$missing->count().' missing keys in '.$targetLanguage);
+        }
 
-            $translated = $this->autoTranslator->translate($targetLanguage, $missing);
+        $bar = $this->output->createProgressBar($missingCount);
+        $bar->start();
+
+        foreach ($targetLanguages as $targetLanguage) {
+            $missing = $this->autoTranslator->getMissingTranslations($targetLanguage);
+
+            $translated = $this->autoTranslator->translate($targetLanguage, $missing, function () use ($bar) {
+                $bar->advance();
+            });
 
             $this->autoTranslator->fillLanguageFiles($targetLanguage, $translated);
-
-            $bar->advance();
         }
 
         $bar->finish();
 
-        $this->info('Translated '.$missingCount.' missing language keys.');
+        $this->info("\nTranslated ".$missingCount.' missing language keys.');
     }
 }
