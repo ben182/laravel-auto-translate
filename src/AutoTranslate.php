@@ -62,18 +62,12 @@ class AutoTranslate
         $dottedSource = Arr::dot($data);
 
         foreach ($dottedSource as $key => $value) {
-            if (is_string($value)) {
-                preg_match_all('/:\S+/', $value, $m);
-            }
+
+            $variables = $this->findVariables($value);
 
             $dottedSource[$key] = is_string($value) ? $this->translator->translate($value) : $value;
 
-            if (isset($m[0])) {
-                $replacements = $m[0];
-                $dottedSource[$key] = preg_replace_callback('/:\S+/', function ($matches) use (&$replacements) {
-                    return array_shift($replacements);
-                }, $dottedSource[$key]);
-            }
+            $dottedSource[$key] = $this->replaceTranslatedVariablesWithOld($variables, $dottedSource[$key]);
 
             if ($callbackAfterEachTranslation) {
                 $callbackAfterEachTranslation();
@@ -81,6 +75,25 @@ class AutoTranslate
         }
 
         return $this->array_undot($dottedSource);
+    }
+
+    public function findVariables($string) {
+        $m = null;
+
+        if (is_string($string)) {
+            preg_match_all('/:\S+/', $string, $m);
+        }
+
+        return $m;
+    }
+
+    public function replaceTranslatedVariablesWithOld($variables, $string) {
+        if (isset($variables[0])) {
+            $replacements = $variables[0];
+            return preg_replace_callback('/:\S+/', function ($matches) use (&$replacements) {
+                return array_shift($replacements);
+            }, $string);
+        }
     }
 
     public function fillLanguageFiles(string $language, array $data)
