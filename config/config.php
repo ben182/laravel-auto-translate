@@ -32,6 +32,7 @@ return [
 
     'deepl' => [
 
+        // Your DeepL API Key. See https://www.deepl.com/pro.html#developer
         'api_key' => '',
     ],
 ];

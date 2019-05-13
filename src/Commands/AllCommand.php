@@ -5,6 +5,7 @@ namespace Ben182\AutoTranslate\Commands;
 use Illuminate\Support\Arr;
 use Illuminate\Console\Command;
 use Ben182\AutoTranslate\AutoTranslate;
+use Illuminate\Support\Str;
 
 class AllCommand extends Command
 {
@@ -44,7 +45,8 @@ class AllCommand extends Command
     {
         $targetLanguages = Arr::wrap(config('auto-translate.target_language'));
 
-        $this->line('Found '.count($targetLanguages).' languages to translate');
+        $foundLanguages = count($targetLanguages);
+        $this->line('Found '.$foundLanguages.' ' . Str::plural('language', $foundLanguages) . ' to translate');
 
         $availableTranslations = 0;
         $sourceTranslations = $this->autoTranslator->getSourceTranslations();
