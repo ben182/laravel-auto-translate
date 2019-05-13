@@ -3,9 +3,9 @@
 namespace Ben182\AutoTranslate\Commands;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Ben182\AutoTranslate\AutoTranslate;
-use Illuminate\Support\Str;
 
 class MissingCommand extends Command
 {
@@ -46,13 +46,13 @@ class MissingCommand extends Command
         $targetLanguages = Arr::wrap(config('auto-translate.target_language'));
 
         $foundLanguages = count($targetLanguages);
-        $this->line('Found '.$foundLanguages.' ' . Str::plural('language', $foundLanguages) . ' to translate');
+        $this->line('Found '.$foundLanguages.' '.Str::plural('language', $foundLanguages).' to translate');
 
         $missingCount = 0;
         foreach ($targetLanguages as $targetLanguage) {
             $missing = $this->autoTranslator->getMissingTranslations($targetLanguage);
             $missingCount += $missing->count();
-            $this->line('Found '.$missing->count().' missing keys in ' . $targetLanguage);
+            $this->line('Found '.$missing->count().' missing keys in '.$targetLanguage);
         }
 
         $bar = $this->output->createProgressBar($missingCount);
