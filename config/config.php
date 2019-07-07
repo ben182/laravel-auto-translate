@@ -30,6 +30,12 @@ return [
         'proxy' => '',
     ],
 
+    'google_cloud_translator' => [
+
+        // Your Google Cloud API key
+        'api_key' => ''
+    ],
+
     'deepl' => [
 
         // Your DeepL API Key. See https://www.deepl.com/pro.html#developer
