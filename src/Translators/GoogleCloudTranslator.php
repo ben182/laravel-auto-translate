@@ -2,7 +2,6 @@
 
 namespace Ben182\AutoTranslate\Translators;
 
-use Ben182\AutoTranslate\Exceptions\LanguageCodeNotExist;
 use Google\Cloud\Translate\TranslateClient;
 
 class GoogleCloudTranslator implements TranslatorInterface
@@ -14,9 +13,8 @@ class GoogleCloudTranslator implements TranslatorInterface
     public function __construct()
     {
         $this->translator = new TranslateClient([
-            'key' => config('auto-translate.google_cloud_translator.api_key')
+            'key' => config('auto-translate.google_cloud_translator.api_key'),
         ]);
-
     }
 
     public function setSource(string $source)
@@ -35,9 +33,9 @@ class GoogleCloudTranslator implements TranslatorInterface
 
     public function translate(string $string) : string
     {
-        $result =  $this->translator->translate($string, [
+        $result = $this->translator->translate($string, [
             'source' => $this->source,
-            'target' => $this->target
+            'target' => $this->target,
         ]);
 
         return $result['text'];

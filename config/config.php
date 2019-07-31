@@ -33,7 +33,7 @@ return [
     'google_cloud_translator' => [
 
         // Your Google Cloud API key
-        'api_key' => ''
+        'api_key' => '',
     ],
 
     'deepl' => [
