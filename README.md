@@ -32,12 +32,13 @@ You can specify your source language, the target language(s), the translator and
 
 ## Translators
 
-| Name                  | Free | File                                                    | Documentation                       | Available languages |
-|-----------------------|------|---------------------------------------------------------|-------------------------------------|----------|
-| Google Translate HTTP | Yes  | Ben182\AutoTranslate\Translators\SimpleGoogleTranslator | /                                   | Over 100 |
-| Deepl API v2          | No   | Ben182\AutoTranslate\Translators\DeeplTranslator        | [Documentation](https://www.deepl.com/docs-api.html) | EN, DE, FR, ES, PT, IT, NL, PL, RU |
+| Name                   | Free | File                                                    | Documentation                       | Available languages |
+|------------------------|------|---------------------------------------------------------|-------------------------------------|----------|
+| Google Translate HTTP  | Yes  | Ben182\AutoTranslate\Translators\SimpleGoogleTranslator | /                                   | Over 100 |
+| Google Cloud Translate | No   | Ben182\AutoTranslate\Translators\GoogleCloudTranslator  | [Documentation](https://cloud.google.com/translate/) | Over 100 |
+| Deepl API v2           | No   | Ben182\AutoTranslate\Translators\DeeplTranslator        | [Documentation](https://www.deepl.com/docs-api.html) | EN, DE, FR, ES, PT, IT, NL, PL, RU |
 
-If you have lots of translations to make I recommend Deepl. It is fast, reliable and you will not encounter any rate limiting.
+If you have lots of translations to make I recommend Google Cloud Translate or Deepl. They are fast, reliable and you will not encounter any rate limiting.
 
 ## Usage
 
