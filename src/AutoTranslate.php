@@ -3,77 +3,65 @@
 namespace Ben182\AutoTranslate;
 
 use Illuminate\Support\Arr;
-use Themsaid\Langman\Manager as Langman;
 use Ben182\AutoTranslate\Translators\TranslatorInterface;
 
-class AutoTranslate
+abstract class AutoTranslate
 {
-    protected $manager;
     public $translator;
 
-    public function __construct(Langman $manager, TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator)
     {
-        $this->manager = $manager;
         $this->translator = $translator;
         $this->translator->setSource(config('auto-translate.source_language'));
     }
 
-    public function getSourceTranslations()
+    public function translateAll(array $targetLanguages, $callbackAfterEachTranslation = null)
     {
-        return $this->getTranslations(config('auto-translate.source_language'));
-    }
+        $sourceTranslations = $this->getSourceTranslations();
 
-    public function getTranslations(string $lang)
-    {
-        $aReturn = [];
+        foreach ($targetLanguages as $targetLanguage) {
+            $translated = $this->translate(
+                $targetLanguage,
+                $sourceTranslations,
+                $callbackAfterEachTranslation
+            );
 
-        $files = $this->manager->files();
-
-        foreach ($files as $fileKeyName => $languagesFile) {
-            if (! isset($languagesFile[$lang])) {
-                continue;
-            }
-
-            $allTranslations = $this->manager->getFileContent($languagesFile[$lang]);
-
-            $aReturn[$fileKeyName] = $allTranslations;
+            $this->fillLanguageFiles($targetLanguage, $translated);
         }
-
-        return $aReturn;
     }
 
-    public function getMissingTranslations(string $lang)
+    public function translateMissing(array $targetLanguages, $callbackAfterEachTranslation = null)
     {
-        $source = $this->getSourceTranslations();
-        $lang = $this->getTranslations($lang);
+        foreach ($targetLanguages as $targetLanguage) {
+            $missingTranslations = $this->getMissingTranslations($targetLanguage);
 
-        $dottedSource = Arr::dot($source);
-        $dottedlang = Arr::dot($lang);
+            $translated = $this->translate(
+                $targetLanguage,
+                $missingTranslations,
+                $callbackAfterEachTranslation
+            );
 
-        $diff = array_diff(array_keys($dottedSource), array_keys($dottedlang));
-
-        return collect($dottedSource)->only($diff);
+            $this->fillLanguageFiles($targetLanguage, $translated);
+        }
     }
 
-    public function translate(string $targetLanguage, $data, $callbackAfterEachTranslation = null)
+    public function translate(string $targetLanguage, $sourceTranslation, $callbackAfterEachTranslation = null)
     {
         $this->translator->setTarget($targetLanguage);
 
-        $dottedSource = Arr::dot($data);
-
-        foreach ($dottedSource as $key => $value) {
+        foreach ($sourceTranslation as $key => $value) {
             $variables = $this->findVariables($value);
 
-            $dottedSource[$key] = is_string($value) ? $this->translator->translate($value) : $value;
+            $sourceTranslation[$key] = is_string($value) ? $this->translator->translate($value) : $value;
 
-            $dottedSource[$key] = $this->replaceTranslatedVariablesWithOld($variables, $dottedSource[$key]);
+            $sourceTranslation[$key] = $this->replaceTranslatedVariablesWithOld($variables, $sourceTranslation[$key]);
 
             if ($callbackAfterEachTranslation) {
                 $callbackAfterEachTranslation();
             }
         }
 
-        return $this->array_undot($dottedSource);
+        return $sourceTranslation;
     }
 
     public function findVariables($string)
@@ -98,25 +86,8 @@ class AutoTranslate
         }
     }
 
-    public function fillLanguageFiles(string $language, array $data)
-    {
-        foreach ($data as $languageFileKey => $translations) {
-            $translations = array_map(function ($item) use ($language) {
-                return [
-                    $language => $item,
-                ];
-            }, $translations);
-
-            $this->manager->fillKeys($languageFileKey, $translations);
-        }
-    }
-
-    public function array_undot(array $dottedArray, array $initialArray = []) : array
-    {
-        foreach ($dottedArray as $key => $value) {
-            Arr::set($initialArray, $key, $value);
-        }
-
-        return $initialArray;
-    }
+    abstract public function getSourceTranslations();
+    abstract public function getTranslations(string $lang);
+    abstract public function getMissingTranslations(string $lang);
+    abstract public function fillLanguageFiles(string $language, array $data);
 }

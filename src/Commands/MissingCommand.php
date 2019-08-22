@@ -5,7 +5,8 @@ namespace Ben182\AutoTranslate\Commands;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
-use Ben182\AutoTranslate\AutoTranslate;
+use Ben182\AutoTranslate\AutoTranslators\JsonTranslator;
+use Ben182\AutoTranslate\AutoTranslators\PhpTranslator;
 
 class MissingCommand extends Command
 {
@@ -23,17 +24,20 @@ class MissingCommand extends Command
      */
     protected $description = 'Translates all source translations that are not set in your target translations';
 
-    protected $autoTranslator;
+    protected $phpTranslator;
+    protected $jsonTranslator;
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct(AutoTranslate $autoTranslator)
+    public function __construct(PhpTranslator $phpTranslator, JsonTranslator $jsonTranslator)
     {
         parent::__construct();
-        $this->autoTranslator = $autoTranslator;
+        $this->phpTranslator = $phpTranslator;
+        $this->jsonTranslator = $jsonTranslator;
+        $this->targetLanguages = Arr::wrap(config('auto-translate.target_language'));
     }
 
     /**
@@ -43,30 +47,71 @@ class MissingCommand extends Command
      */
     public function handle()
     {
-        $targetLanguages = Arr::wrap(config('auto-translate.target_language'));
+        $numTargetLanguages = count($this->targetLanguages);
 
-        $foundLanguages = count($targetLanguages);
-        $this->line('Found '.$foundLanguages.' '.Str::plural('language', $foundLanguages).' to translate');
+        $this->line(implode(' ', [
+            'Found',
+            $numTargetLanguages,
+            Str::plural('language', $numTargetLanguages),
+            'to translate',
+        ]));
+
+        $this->translatePhpFiles();
+        $this->translateJsonFiles();
+    }
+
+    public function translatePhpFiles()
+    {
+        $this->line('Translating PHP files');
 
         $missingCount = 0;
-        foreach ($targetLanguages as $targetLanguage) {
-            $missing = $this->autoTranslator->getMissingTranslations($targetLanguage);
-            $missingCount += $missing->count();
-            $this->line('Found '.$missing->count().' missing keys in '.$targetLanguage);
+        foreach ($this->targetLanguages as $targetLanguage) {
+            $missingTranslations = $this->phpTranslator->getMissingTranslations($targetLanguage);
+            $missingCount += count($missingTranslations);
+
+            $this->line(implode(' ', [
+                'Found',
+                count($missingTranslations),
+                'missing keys in',
+                $targetLanguage,
+            ]));
         }
 
         $bar = $this->output->createProgressBar($missingCount);
         $bar->start();
 
-        foreach ($targetLanguages as $targetLanguage) {
-            $missing = $this->autoTranslator->getMissingTranslations($targetLanguage);
+        $this->phpTranslator->translateMissing($this->targetLanguages, function () use ($bar) {
+            $bar->advance();
+        });
 
-            $translated = $this->autoTranslator->translate($targetLanguage, $missing, function () use ($bar) {
-                $bar->advance();
-            });
+        $bar->finish();
 
-            $this->autoTranslator->fillLanguageFiles($targetLanguage, $translated);
+        $this->info("\nTranslated ".$missingCount.' missing language keys.');
+    }
+
+    public function translateJsonFiles()
+    {
+        $this->line('Translating JSON files');
+
+        $missingCount = 0;
+        foreach ($this->targetLanguages as $targetLanguage) {
+            $missingTranslations = $this->jsonTranslator->getMissingTranslations($targetLanguage);
+            $missingCount += count($missingTranslations);
+
+            $this->line(implode(' ', [
+                'Found',
+                count($missingTranslations),
+                'missing keys in',
+                $targetLanguage,
+            ]));
         }
+
+        $bar = $this->output->createProgressBar($missingCount);
+        $bar->start();
+
+        $this->jsonTranslator->translateMissing($this->targetLanguages, function () use ($bar) {
+            $bar->advance();
+        });
 
         $bar->finish();
 
