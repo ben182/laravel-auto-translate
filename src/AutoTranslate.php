@@ -62,7 +62,6 @@ class AutoTranslate
         $dottedSource = Arr::dot($data);
 
         foreach ($dottedSource as $key => $value) {
-
             if ($value === '') {
                 $dottedSource[$key] = $value;
 
