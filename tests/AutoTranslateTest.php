@@ -152,4 +152,23 @@ class AutoTranslateTest extends TestCase
             ],
         ], $translations);
     }
+
+    public function test_translate_with_no_content()
+    {
+        $mock = Mockery::mock(TranslatorInterface::class);
+        $mock
+        ->shouldReceive('setSource')
+        ->shouldReceive('setTarget')
+
+        ->shouldNotReceive('translate')
+            ->mock();
+
+        $this->app->instance(TranslatorInterface::class, $mock);
+
+        $translations = AutoTranslateFacade::translate('de', [
+            'user' => [
+                'age' => '',
+            ],
+        ]);
+    }
 }

@@ -62,6 +62,16 @@ class AutoTranslate
         $dottedSource = Arr::dot($data);
 
         foreach ($dottedSource as $key => $value) {
+
+            if ($value === '') {
+                $dottedSource[$key] = $value;
+
+                if ($callbackAfterEachTranslation) {
+                    $callbackAfterEachTranslation();
+                }
+                continue;
+            }
+
             $variables = $this->findVariables($value);
 
             $dottedSource[$key] = is_string($value) ? $this->translator->translate($value) : $value;
