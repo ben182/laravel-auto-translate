@@ -50,7 +50,23 @@ class AllCommand extends Command
 
         $availableTranslations = 0;
         $sourceTranslations = $this->autoTranslator->getSourceTranslations();
-        $availableTranslations = count(Arr::dot($sourceTranslations)) * count($targetLanguages);
+        $availableTranslations = count($dottedTranslations = Arr::dot($sourceTranslations)) * count($targetLanguages);
+
+        if (empty($dottedTranslations)) {
+            $this->line('0 keys found...aborting');
+
+            return;
+        }
+
+        $strLen = collect($dottedTranslations)->map(function ($value) {
+            return strlen($value);
+        })->sum() * count($targetLanguages);
+
+        $this->line($strLen.' characters will be translated');
+
+        if (! $this->confirm('Continue?', true)) {
+            return;
+        }
 
         $bar = $this->output->createProgressBar($availableTranslations);
         $bar->start();
