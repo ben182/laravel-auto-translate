@@ -54,16 +54,17 @@ class AllCommand extends Command
 
         if (empty($dottedTranslations)) {
             $this->line('0 keys found...aborting');
+
             return;
         }
 
-        $strLen = collect($dottedTranslations)->map(function($value) {
+        $strLen = collect($dottedTranslations)->map(function ($value) {
             return strlen($value);
         })->sum() * count($targetLanguages);
 
-        $this->line($strLen . ' characters will be translated');
+        $this->line($strLen.' characters will be translated');
 
-        if (!$this->confirm('Continue?', true)) {
+        if (! $this->confirm('Continue?', true)) {
             return;
         }
 
